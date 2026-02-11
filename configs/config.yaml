@@ -9,6 +9,6 @@ mysql:
 
 kafka:
   brokers:
-    - "localhost:9092"
-  topic: "nba_match_events"
+    - "192.168.127.154:9092"
+  topic: "nba_match_events_fix"
   group_id: "nba_group"

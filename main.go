@@ -77,7 +77,7 @@ func main() {
 
 	// 2. 启动 消费者 服务
 	go func() {
-		log.Println("👷 消费者 Worker 已启动")
+		log.Println("消费者 Worker 已启动")
 		for {
 			if err := consumerGroup.Consume(ctx, []string{conf.Kafka.Topic}, statsHandler); err != nil {
 				log.Printf("消费错误: %v", err)
@@ -86,6 +86,8 @@ func main() {
 			if ctx.Err() != nil {
 				return
 			}
+			// 消费成功 打印出消费的具体的消息
+			log.Printf("消费成功, 准备下一轮消费")
 		}
 	}()
 

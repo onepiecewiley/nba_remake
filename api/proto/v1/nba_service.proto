@@ -4,26 +4,122 @@ package v1;
 
 option go_package = "nba_service/api/proto/v1;nba_v";
 
+// NBA球员管理服务
 service NBAService {
+  // 创建球员
   rpc CreatePlayer(CreatePlayerRequest) returns (PlayerResponse);
+
+  // 获取球员详情
   rpc GetPlayer(GetPlayerRequest) returns (PlayerResponse);
+
+  // 更新球员信息
+  rpc UpdatePlayer(UpdatePlayerRequest) returns (PlayerResponse);
+
+  // 删除球员
+  rpc DeletePlayer(DeletePlayerRequest) returns (DeletePlayerResponse);
+
+  // 按条件查询球员列表
+  rpc ListPlayers(ListPlayersRequest) returns (ListPlayersResponse);
+
+  // 按球队ID获取球员
+  rpc GetPlayersByTeam(GetPlayersByTeamRequest) returns (ListPlayersResponse);
 }
 
+// 球员位置枚举
+enum Position {
+  POSITION_UNKNOWN = 0;
+  PG = 1;  // 控球后卫
+  SG = 2;  // 得分后卫
+  SF = 3;  // 小前锋
+  PF = 4;  // 大前锋
+  C = 5;   // 中锋
+}
+
+// 球员状态枚举
+enum PlayerStatus {
+  STATUS_UNKNOWN = 0;
+  RETIRED = 1;   // 退役
+  ACTIVE = 2;    // 现役
+  INJURED = 3;   // 受伤
+  ASSIGNED = 4;  // 下放
+}
+
+// 创建球员请求
 message CreatePlayerRequest {
-  string name = 1;
-  int32 team_id = 2;
-  string position = 3;
+  string name = 1;                    // 球员姓名
+  int32 team_id = 2;                  // 所属球队ID
+  int32 jersey_number = 3;            // 球衣号码 (1-99)
+  Position position = 4;              // 位置
+  double height = 5;                  // 身高 (米), 例如: 1.98
+  double weight = 6;                  // 体重 (kg), 例如: 95.5
+  string birthday = 7;                // 出生日期, 格式: YYYY-MM-DD
+  PlayerStatus status = 8;                    // 状态
 }
 
+// 获取球员请求
 message GetPlayerRequest {
-  int32 id = 1;
+  int32 id = 1;                       // 球员ID
 }
 
+// 更新球员请求
+message UpdatePlayerRequest {
+  int32 id = 1;                       // 球员ID
+  string name = 2;                    // 球员姓名
+  int32 team_id = 3;                  // 所属球队ID
+  int32 jersey_number = 4;            // 球衣号码
+  Position position = 5;              // 位置
+  double height = 6;                  // 身高
+  double weight = 7;                  // 体重
+  string birthday = 8;                // 出生日期
+  PlayerStatus status = 9;            // 状态
+}
+
+// 删除球员请求
+message DeletePlayerRequest {
+  int32 id = 1;                       // 球员ID
+}
+
+// 删除球员响应
+message DeletePlayerResponse {
+  bool success = 1;                   // 是否成功
+  string message = 2;                 // 消息
+}
+
+// 球员响应（完整信息）
 message PlayerResponse {
-  int32 id = 1;
-  string name = 2;
-  int32 team_id = 3;
-  string position = 4;
+  int32 id = 1;                       // 球员ID
+  int32 team_id = 2;                  // 所属球队ID
+  string name = 3;                    // 球员姓名
+  int32 jersey_number = 4;            // 球衣号码
+  Position position = 5;              // 位置
+  double height = 6;                  // 身高 (米)
+  double weight = 7;                  // 体重 (kg)
+  string birthday = 8;                // 出生日期
+  PlayerStatus status = 9;            // 状态
+  string status_text = 10;            // 状态文本
+  string created_at = 11;             // 创建时间
+  string updated_at = 12;             // 更新时间
 }
 
+// 查询球员列表请求
+message ListPlayersRequest {
+  int32 page = 1;                     // 页码，从1开始
+  int32 page_size = 2;                // 每页数量，默认20
+  string name = 3;                    // 按姓名模糊查询
+  int32 team_id = 4;                  // 按球队ID查询
+  Position position = 5;              // 按位置查询
+  PlayerStatus status = 6;            // 按状态查询
+}
 
+// 球员列表响应
+message ListPlayersResponse {
+  repeated PlayerResponse players = 1;  // 球员列表
+  int32 total = 2;                     // 总数量
+  int32 page = 3;                      // 当前页码
+  int32 page_size = 4;                 // 每页数量
+}
+
+// 按球队获取球员请求
+message GetPlayersByTeamRequest {
+  int32 team_id = 1;                  // 球队ID
+}

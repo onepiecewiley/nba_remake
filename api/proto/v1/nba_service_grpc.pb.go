@@ -25,6 +25,11 @@ const (
 	NBAService_DeletePlayer_FullMethodName     = "/v1.NBAService/DeletePlayer"
 	NBAService_ListPlayers_FullMethodName      = "/v1.NBAService/ListPlayers"
 	NBAService_GetPlayersByTeam_FullMethodName = "/v1.NBAService/GetPlayersByTeam"
+	NBAService_GetTeam_FullMethodName          = "/v1.NBAService/GetTeam"
+	NBAService_ListTeams_FullMethodName        = "/v1.NBAService/ListTeams"
+	NBAService_ListMatches_FullMethodName      = "/v1.NBAService/ListMatches"
+	NBAService_GetMatch_FullMethodName         = "/v1.NBAService/GetMatch"
+	NBAService_RecordMatchEvent_FullMethodName = "/v1.NBAService/RecordMatchEvent"
 )
 
 // NBAServiceClient is the client API for NBAService service.
@@ -33,6 +38,9 @@ const (
 //
 // NBA球员管理服务
 type NBAServiceClient interface {
+	// -----------------------
+	// 1. 球员模块
+	// -----------------------
 	// 创建球员
 	CreatePlayer(ctx context.Context, in *CreatePlayerRequest, opts ...grpc.CallOption) (*PlayerResponse, error)
 	// 获取球员详情
@@ -45,6 +53,20 @@ type NBAServiceClient interface {
 	ListPlayers(ctx context.Context, in *ListPlayersRequest, opts ...grpc.CallOption) (*ListPlayersResponse, error)
 	// 按球队ID获取球员
 	GetPlayersByTeam(ctx context.Context, in *GetPlayersByTeamRequest, opts ...grpc.CallOption) (*ListPlayersResponse, error)
+	// -----------------------
+	// 2. 球队模块 (Team)
+	// -----------------------
+	GetTeam(ctx context.Context, in *GetTeamRequest, opts ...grpc.CallOption) (*TeamResponse, error)
+	ListTeams(ctx context.Context, in *ListTeamsRequest, opts ...grpc.CallOption) (*ListTeamsResponse, error)
+	// -----------------------
+	// 3. 比赛模块 (Match)
+	// -----------------------
+	// 获取当天的比赛列表
+	ListMatches(ctx context.Context, in *ListMatchesRequest, opts ...grpc.CallOption) (*ListMatchesResponse, error)
+	// 获取比赛详情 (包括实时比分)
+	GetMatch(ctx context.Context, in *GetMatchRequest, opts ...grpc.CallOption) (*MatchResponse, error)
+	// [核心] 比赛事件上报 (对接 Kafka)
+	RecordMatchEvent(ctx context.Context, in *RecordMatchEventRequest, opts ...grpc.CallOption) (*RecordMatchEventResponse, error)
 }
 
 type nBAServiceClient struct {
@@ -115,12 +137,65 @@ func (c *nBAServiceClient) GetPlayersByTeam(ctx context.Context, in *GetPlayersB
 	return out, nil
 }
 
+func (c *nBAServiceClient) GetTeam(ctx context.Context, in *GetTeamRequest, opts ...grpc.CallOption) (*TeamResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TeamResponse)
+	err := c.cc.Invoke(ctx, NBAService_GetTeam_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nBAServiceClient) ListTeams(ctx context.Context, in *ListTeamsRequest, opts ...grpc.CallOption) (*ListTeamsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListTeamsResponse)
+	err := c.cc.Invoke(ctx, NBAService_ListTeams_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nBAServiceClient) ListMatches(ctx context.Context, in *ListMatchesRequest, opts ...grpc.CallOption) (*ListMatchesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListMatchesResponse)
+	err := c.cc.Invoke(ctx, NBAService_ListMatches_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nBAServiceClient) GetMatch(ctx context.Context, in *GetMatchRequest, opts ...grpc.CallOption) (*MatchResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MatchResponse)
+	err := c.cc.Invoke(ctx, NBAService_GetMatch_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nBAServiceClient) RecordMatchEvent(ctx context.Context, in *RecordMatchEventRequest, opts ...grpc.CallOption) (*RecordMatchEventResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RecordMatchEventResponse)
+	err := c.cc.Invoke(ctx, NBAService_RecordMatchEvent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NBAServiceServer is the server API for NBAService service.
 // All implementations must embed UnimplementedNBAServiceServer
 // for forward compatibility.
 //
 // NBA球员管理服务
 type NBAServiceServer interface {
+	// -----------------------
+	// 1. 球员模块
+	// -----------------------
 	// 创建球员
 	CreatePlayer(context.Context, *CreatePlayerRequest) (*PlayerResponse, error)
 	// 获取球员详情
@@ -133,6 +208,20 @@ type NBAServiceServer interface {
 	ListPlayers(context.Context, *ListPlayersRequest) (*ListPlayersResponse, error)
 	// 按球队ID获取球员
 	GetPlayersByTeam(context.Context, *GetPlayersByTeamRequest) (*ListPlayersResponse, error)
+	// -----------------------
+	// 2. 球队模块 (Team)
+	// -----------------------
+	GetTeam(context.Context, *GetTeamRequest) (*TeamResponse, error)
+	ListTeams(context.Context, *ListTeamsRequest) (*ListTeamsResponse, error)
+	// -----------------------
+	// 3. 比赛模块 (Match)
+	// -----------------------
+	// 获取当天的比赛列表
+	ListMatches(context.Context, *ListMatchesRequest) (*ListMatchesResponse, error)
+	// 获取比赛详情 (包括实时比分)
+	GetMatch(context.Context, *GetMatchRequest) (*MatchResponse, error)
+	// [核心] 比赛事件上报 (对接 Kafka)
+	RecordMatchEvent(context.Context, *RecordMatchEventRequest) (*RecordMatchEventResponse, error)
 	mustEmbedUnimplementedNBAServiceServer()
 }
 
@@ -160,6 +249,21 @@ func (UnimplementedNBAServiceServer) ListPlayers(context.Context, *ListPlayersRe
 }
 func (UnimplementedNBAServiceServer) GetPlayersByTeam(context.Context, *GetPlayersByTeamRequest) (*ListPlayersResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetPlayersByTeam not implemented")
+}
+func (UnimplementedNBAServiceServer) GetTeam(context.Context, *GetTeamRequest) (*TeamResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetTeam not implemented")
+}
+func (UnimplementedNBAServiceServer) ListTeams(context.Context, *ListTeamsRequest) (*ListTeamsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListTeams not implemented")
+}
+func (UnimplementedNBAServiceServer) ListMatches(context.Context, *ListMatchesRequest) (*ListMatchesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListMatches not implemented")
+}
+func (UnimplementedNBAServiceServer) GetMatch(context.Context, *GetMatchRequest) (*MatchResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetMatch not implemented")
+}
+func (UnimplementedNBAServiceServer) RecordMatchEvent(context.Context, *RecordMatchEventRequest) (*RecordMatchEventResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RecordMatchEvent not implemented")
 }
 func (UnimplementedNBAServiceServer) mustEmbedUnimplementedNBAServiceServer() {}
 func (UnimplementedNBAServiceServer) testEmbeddedByValue()                    {}
@@ -290,6 +394,96 @@ func _NBAService_GetPlayersByTeam_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NBAService_GetTeam_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTeamRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NBAServiceServer).GetTeam(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NBAService_GetTeam_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NBAServiceServer).GetTeam(ctx, req.(*GetTeamRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NBAService_ListTeams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTeamsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NBAServiceServer).ListTeams(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NBAService_ListTeams_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NBAServiceServer).ListTeams(ctx, req.(*ListTeamsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NBAService_ListMatches_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMatchesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NBAServiceServer).ListMatches(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NBAService_ListMatches_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NBAServiceServer).ListMatches(ctx, req.(*ListMatchesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NBAService_GetMatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMatchRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NBAServiceServer).GetMatch(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NBAService_GetMatch_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NBAServiceServer).GetMatch(ctx, req.(*GetMatchRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _NBAService_RecordMatchEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RecordMatchEventRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NBAServiceServer).RecordMatchEvent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NBAService_RecordMatchEvent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NBAServiceServer).RecordMatchEvent(ctx, req.(*RecordMatchEventRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NBAService_ServiceDesc is the grpc.ServiceDesc for NBAService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -320,6 +514,26 @@ var NBAService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPlayersByTeam",
 			Handler:    _NBAService_GetPlayersByTeam_Handler,
+		},
+		{
+			MethodName: "GetTeam",
+			Handler:    _NBAService_GetTeam_Handler,
+		},
+		{
+			MethodName: "ListTeams",
+			Handler:    _NBAService_ListTeams_Handler,
+		},
+		{
+			MethodName: "ListMatches",
+			Handler:    _NBAService_ListMatches_Handler,
+		},
+		{
+			MethodName: "GetMatch",
+			Handler:    _NBAService_GetMatch_Handler,
+		},
+		{
+			MethodName: "RecordMatchEvent",
+			Handler:    _NBAService_RecordMatchEvent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

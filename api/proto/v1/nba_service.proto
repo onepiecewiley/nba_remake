@@ -6,6 +6,9 @@ option go_package = "nba_service/api/proto/v1;nba_v";
 
 // NBA球员管理服务
 service NBAService {
+  // -----------------------
+  // 1. 球员模块
+  // -----------------------
   // 创建球员
   rpc CreatePlayer(CreatePlayerRequest) returns (PlayerResponse);
 
@@ -23,6 +26,22 @@ service NBAService {
 
   // 按球队ID获取球员
   rpc GetPlayersByTeam(GetPlayersByTeamRequest) returns (ListPlayersResponse);
+
+  // -----------------------
+  // 2. 球队模块 (Team)
+  // -----------------------
+  rpc GetTeam(GetTeamRequest) returns (TeamResponse);
+  rpc ListTeams(ListTeamsRequest) returns (ListTeamsResponse);
+
+  // -----------------------
+  // 3. 比赛模块 (Match)
+  // -----------------------
+  // 获取当天的比赛列表
+  rpc ListMatches(ListMatchesRequest) returns (ListMatchesResponse);
+  // 获取比赛详情 (包括实时比分)
+  rpc GetMatch(GetMatchRequest) returns (MatchResponse);
+  // [核心] 比赛事件上报 (对接 Kafka)
+  rpc RecordMatchEvent(RecordMatchEventRequest) returns (RecordMatchEventResponse);
 }
 
 // 球员位置枚举
@@ -122,4 +141,71 @@ message ListPlayersResponse {
 // 按球队获取球员请求
 message GetPlayersByTeamRequest {
   int32 team_id = 1;                  // 球队ID
+}
+
+// --- 球队相关 Message ---
+message GetTeamRequest {
+  int32 id = 1;
+}
+
+message TeamResponse {
+  int32 id = 1;
+  string name = 2;          // e.g. Lakers
+  string city = 3;          // e.g. Los Angeles
+  string abbreviation = 4;  // e.g. LAL
+  string conference = 5;    // East / West
+  string logo_url = 6;
+}
+
+message ListTeamsRequest {
+  // 暂时留空，获取所有
+}
+
+message ListTeamsResponse {
+  repeated TeamResponse teams = 1;
+}
+
+// --- 比赛相关 Message ---
+message ListMatchesRequest {
+  string date = 1; // 格式 "2023-11-05"
+}
+
+message MatchResponse {
+  int64 id = 1;
+  string date = 2;
+  int32 home_team_id = 3;
+  int32 visitor_team_id = 4;
+  int32 home_score = 5;     // 主队得分
+  int32 visitor_score = 6;  // 客队得分
+  int32 status = 7;         // 0:未开始, 1:进行中, 2:已结束
+  string start_time = 8;
+  // 这里直接嵌套 TeamResponse，方便前端显示队名
+  TeamResponse home_team = 9;
+  TeamResponse visitor_team = 10;
+}
+
+message ListMatchesResponse {
+  repeated MatchResponse matches = 1;
+}
+
+message GetMatchRequest {
+  int64 id = 1;
+}
+
+// --- 事件上报 (Kafka 生产者用) ---
+message RecordMatchEventRequest {
+  int64 match_id = 1;    // 哪场比赛
+  int32 player_id = 2;   // 谁
+  int32 type = 3;        // 干了什么 (1:得分, 2:篮板...)
+  int32 value = 4;       // 分值 (3分, 2分, 1个板)
+  string event_time = 5; // 发生时间
+  int32 team_id = 6;          // 属于哪个队
+  int32 quarter = 7;          // 第几节 (1-4)
+  string sub_type = 8;        // 子类型 (e.g. "3pt", "dunk")
+  string time_remaining = 9;  // 剩余时间 (e.g. "10:23")
+}
+
+message RecordMatchEventResponse {
+  bool success = 1;
+  string message = 2;
 }

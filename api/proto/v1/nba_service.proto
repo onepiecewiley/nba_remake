@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package v1;
+
+option go_package = "nba_service/api/proto/v1;nba_v";
+
+service NBAService {
+  rpc CreatePlayer(CreatePlayerRequest) returns (PlayerResponse);
+  rpc GetPlayer(GetPlayerRequest) returns (PlayerResponse);
+}
+
+message CreatePlayerRequest {
+  string name = 1;
+  int32 team_id = 2;
+  string position = 3;
+}
+
+message GetPlayerRequest {
+  int32 id = 1;
+}
+
+message PlayerResponse {
+  int32 id = 1;
+  string name = 2;
+  int32 team_id = 3;
+  string position = 4;
+}
+
+

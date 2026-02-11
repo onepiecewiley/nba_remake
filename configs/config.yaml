@@ -1,0 +1,14 @@
+server:
+  name: "nba-service"
+  port: ":50051"
+
+mysql:
+  dsn: "root:123456@tcp(127.0.0.1:3306)/nba_manager?charset=utf8mb4&parseTime=True&loc=Local"
+  max_idle: 10
+  max_open: 100
+
+kafka:
+  brokers:
+    - "localhost:9092"
+  topic: "nba_match_events"
+  group_id: "nba_group"

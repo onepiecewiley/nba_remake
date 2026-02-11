@@ -5,17 +5,24 @@ import (
 	pb "nba-remake/api/proto/v1"
 	"nba-remake/internal/dao"
 	"nba-remake/internal/model"
+	"nba-remake/internal/mq"
 	"time"
 )
 
 type NBAService struct {
 	pb.UnimplementedNBAServiceServer
-	playerDao *dao.PlayerDao
+	playerDao     *dao.PlayerDao
+	teamDao       *dao.TeamDao
+	matchDao      *dao.MatchDao
+	kafkaProducer *mq.Producer
 }
 
-func NewNBAService(playerDao *dao.PlayerDao) *NBAService {
+func NewNBAService(playerDao *dao.PlayerDao, teamDao *dao.TeamDao, matchDao *dao.MatchDao, kafkaProducer *mq.Producer) *NBAService {
 	return &NBAService{
-		playerDao: playerDao,
+		playerDao:     playerDao,
+		teamDao:       teamDao,
+		matchDao:      matchDao,
+		kafkaProducer: kafkaProducer,
 	}
 }
 

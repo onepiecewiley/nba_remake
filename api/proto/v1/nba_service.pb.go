@@ -821,6 +821,626 @@ func (x *GetPlayersByTeamRequest) GetTeamId() int32 {
 	return 0
 }
 
+// --- 球队相关 Message ---
+type GetTeamRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTeamRequest) Reset() {
+	*x = GetTeamRequest{}
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTeamRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTeamRequest) ProtoMessage() {}
+
+func (x *GetTeamRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTeamRequest.ProtoReflect.Descriptor instead.
+func (*GetTeamRequest) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_nba_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetTeamRequest) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type TeamResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                 // e.g. Lakers
+	City          string                 `protobuf:"bytes,3,opt,name=city,proto3" json:"city,omitempty"`                 // e.g. Los Angeles
+	Abbreviation  string                 `protobuf:"bytes,4,opt,name=abbreviation,proto3" json:"abbreviation,omitempty"` // e.g. LAL
+	Conference    string                 `protobuf:"bytes,5,opt,name=conference,proto3" json:"conference,omitempty"`     // East / West
+	LogoUrl       string                 `protobuf:"bytes,6,opt,name=logo_url,json=logoUrl,proto3" json:"logo_url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TeamResponse) Reset() {
+	*x = TeamResponse{}
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TeamResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TeamResponse) ProtoMessage() {}
+
+func (x *TeamResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TeamResponse.ProtoReflect.Descriptor instead.
+func (*TeamResponse) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_nba_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *TeamResponse) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *TeamResponse) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *TeamResponse) GetCity() string {
+	if x != nil {
+		return x.City
+	}
+	return ""
+}
+
+func (x *TeamResponse) GetAbbreviation() string {
+	if x != nil {
+		return x.Abbreviation
+	}
+	return ""
+}
+
+func (x *TeamResponse) GetConference() string {
+	if x != nil {
+		return x.Conference
+	}
+	return ""
+}
+
+func (x *TeamResponse) GetLogoUrl() string {
+	if x != nil {
+		return x.LogoUrl
+	}
+	return ""
+}
+
+type ListTeamsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTeamsRequest) Reset() {
+	*x = ListTeamsRequest{}
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTeamsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTeamsRequest) ProtoMessage() {}
+
+func (x *ListTeamsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTeamsRequest.ProtoReflect.Descriptor instead.
+func (*ListTeamsRequest) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_nba_service_proto_rawDescGZIP(), []int{11}
+}
+
+type ListTeamsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Teams         []*TeamResponse        `protobuf:"bytes,1,rep,name=teams,proto3" json:"teams,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTeamsResponse) Reset() {
+	*x = ListTeamsResponse{}
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTeamsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTeamsResponse) ProtoMessage() {}
+
+func (x *ListTeamsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTeamsResponse.ProtoReflect.Descriptor instead.
+func (*ListTeamsResponse) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_nba_service_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *ListTeamsResponse) GetTeams() []*TeamResponse {
+	if x != nil {
+		return x.Teams
+	}
+	return nil
+}
+
+// --- 比赛相关 Message ---
+type ListMatchesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Date          string                 `protobuf:"bytes,1,opt,name=date,proto3" json:"date,omitempty"` // 格式 "2023-11-05"
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListMatchesRequest) Reset() {
+	*x = ListMatchesRequest{}
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListMatchesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListMatchesRequest) ProtoMessage() {}
+
+func (x *ListMatchesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListMatchesRequest.ProtoReflect.Descriptor instead.
+func (*ListMatchesRequest) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_nba_service_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ListMatchesRequest) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+type MatchResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Date          string                 `protobuf:"bytes,2,opt,name=date,proto3" json:"date,omitempty"`
+	HomeTeamId    int32                  `protobuf:"varint,3,opt,name=home_team_id,json=homeTeamId,proto3" json:"home_team_id,omitempty"`
+	VisitorTeamId int32                  `protobuf:"varint,4,opt,name=visitor_team_id,json=visitorTeamId,proto3" json:"visitor_team_id,omitempty"`
+	HomeScore     int32                  `protobuf:"varint,5,opt,name=home_score,json=homeScore,proto3" json:"home_score,omitempty"`          // 主队得分
+	VisitorScore  int32                  `protobuf:"varint,6,opt,name=visitor_score,json=visitorScore,proto3" json:"visitor_score,omitempty"` // 客队得分
+	Status        int32                  `protobuf:"varint,7,opt,name=status,proto3" json:"status,omitempty"`                                 // 0:未开始, 1:进行中, 2:已结束
+	StartTime     string                 `protobuf:"bytes,8,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	// 这里直接嵌套 TeamResponse，方便前端显示队名
+	HomeTeam      *TeamResponse `protobuf:"bytes,9,opt,name=home_team,json=homeTeam,proto3" json:"home_team,omitempty"`
+	VisitorTeam   *TeamResponse `protobuf:"bytes,10,opt,name=visitor_team,json=visitorTeam,proto3" json:"visitor_team,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MatchResponse) Reset() {
+	*x = MatchResponse{}
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MatchResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MatchResponse) ProtoMessage() {}
+
+func (x *MatchResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MatchResponse.ProtoReflect.Descriptor instead.
+func (*MatchResponse) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_nba_service_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *MatchResponse) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *MatchResponse) GetDate() string {
+	if x != nil {
+		return x.Date
+	}
+	return ""
+}
+
+func (x *MatchResponse) GetHomeTeamId() int32 {
+	if x != nil {
+		return x.HomeTeamId
+	}
+	return 0
+}
+
+func (x *MatchResponse) GetVisitorTeamId() int32 {
+	if x != nil {
+		return x.VisitorTeamId
+	}
+	return 0
+}
+
+func (x *MatchResponse) GetHomeScore() int32 {
+	if x != nil {
+		return x.HomeScore
+	}
+	return 0
+}
+
+func (x *MatchResponse) GetVisitorScore() int32 {
+	if x != nil {
+		return x.VisitorScore
+	}
+	return 0
+}
+
+func (x *MatchResponse) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+func (x *MatchResponse) GetStartTime() string {
+	if x != nil {
+		return x.StartTime
+	}
+	return ""
+}
+
+func (x *MatchResponse) GetHomeTeam() *TeamResponse {
+	if x != nil {
+		return x.HomeTeam
+	}
+	return nil
+}
+
+func (x *MatchResponse) GetVisitorTeam() *TeamResponse {
+	if x != nil {
+		return x.VisitorTeam
+	}
+	return nil
+}
+
+type ListMatchesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Matches       []*MatchResponse       `protobuf:"bytes,1,rep,name=matches,proto3" json:"matches,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListMatchesResponse) Reset() {
+	*x = ListMatchesResponse{}
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListMatchesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListMatchesResponse) ProtoMessage() {}
+
+func (x *ListMatchesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListMatchesResponse.ProtoReflect.Descriptor instead.
+func (*ListMatchesResponse) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_nba_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListMatchesResponse) GetMatches() []*MatchResponse {
+	if x != nil {
+		return x.Matches
+	}
+	return nil
+}
+
+type GetMatchRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetMatchRequest) Reset() {
+	*x = GetMatchRequest{}
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetMatchRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetMatchRequest) ProtoMessage() {}
+
+func (x *GetMatchRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetMatchRequest.ProtoReflect.Descriptor instead.
+func (*GetMatchRequest) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_nba_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GetMatchRequest) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// --- 事件上报 (Kafka 生产者用) ---
+type RecordMatchEventRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	MatchId       int64                  `protobuf:"varint,1,opt,name=match_id,json=matchId,proto3" json:"match_id,omitempty"`                  // 哪场比赛
+	PlayerId      int32                  `protobuf:"varint,2,opt,name=player_id,json=playerId,proto3" json:"player_id,omitempty"`               // 谁
+	Type          int32                  `protobuf:"varint,3,opt,name=type,proto3" json:"type,omitempty"`                                       // 干了什么 (1:得分, 2:篮板...)
+	Value         int32                  `protobuf:"varint,4,opt,name=value,proto3" json:"value,omitempty"`                                     // 分值 (3分, 2分, 1个板)
+	EventTime     string                 `protobuf:"bytes,5,opt,name=event_time,json=eventTime,proto3" json:"event_time,omitempty"`             // 发生时间
+	TeamId        int32                  `protobuf:"varint,6,opt,name=team_id,json=teamId,proto3" json:"team_id,omitempty"`                     // 属于哪个队
+	Quarter       int32                  `protobuf:"varint,7,opt,name=quarter,proto3" json:"quarter,omitempty"`                                 // 第几节 (1-4)
+	SubType       string                 `protobuf:"bytes,8,opt,name=sub_type,json=subType,proto3" json:"sub_type,omitempty"`                   // 子类型 (e.g. "3pt", "dunk")
+	TimeRemaining string                 `protobuf:"bytes,9,opt,name=time_remaining,json=timeRemaining,proto3" json:"time_remaining,omitempty"` // 剩余时间 (e.g. "10:23")
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RecordMatchEventRequest) Reset() {
+	*x = RecordMatchEventRequest{}
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RecordMatchEventRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RecordMatchEventRequest) ProtoMessage() {}
+
+func (x *RecordMatchEventRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RecordMatchEventRequest.ProtoReflect.Descriptor instead.
+func (*RecordMatchEventRequest) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_nba_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *RecordMatchEventRequest) GetMatchId() int64 {
+	if x != nil {
+		return x.MatchId
+	}
+	return 0
+}
+
+func (x *RecordMatchEventRequest) GetPlayerId() int32 {
+	if x != nil {
+		return x.PlayerId
+	}
+	return 0
+}
+
+func (x *RecordMatchEventRequest) GetType() int32 {
+	if x != nil {
+		return x.Type
+	}
+	return 0
+}
+
+func (x *RecordMatchEventRequest) GetValue() int32 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
+func (x *RecordMatchEventRequest) GetEventTime() string {
+	if x != nil {
+		return x.EventTime
+	}
+	return ""
+}
+
+func (x *RecordMatchEventRequest) GetTeamId() int32 {
+	if x != nil {
+		return x.TeamId
+	}
+	return 0
+}
+
+func (x *RecordMatchEventRequest) GetQuarter() int32 {
+	if x != nil {
+		return x.Quarter
+	}
+	return 0
+}
+
+func (x *RecordMatchEventRequest) GetSubType() string {
+	if x != nil {
+		return x.SubType
+	}
+	return ""
+}
+
+func (x *RecordMatchEventRequest) GetTimeRemaining() string {
+	if x != nil {
+		return x.TimeRemaining
+	}
+	return ""
+}
+
+type RecordMatchEventResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RecordMatchEventResponse) Reset() {
+	*x = RecordMatchEventResponse{}
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RecordMatchEventResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RecordMatchEventResponse) ProtoMessage() {}
+
+func (x *RecordMatchEventResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_proto_v1_nba_service_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RecordMatchEventResponse.ProtoReflect.Descriptor instead.
+func (*RecordMatchEventResponse) Descriptor() ([]byte, []int) {
+	return file_api_proto_v1_nba_service_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *RecordMatchEventResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *RecordMatchEventResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_api_proto_v1_nba_service_proto protoreflect.FileDescriptor
 
 const file_api_proto_v1_nba_service_proto_rawDesc = "" +
@@ -882,7 +1502,56 @@ const file_api_proto_v1_nba_service_proto_rawDesc = "" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x1b\n" +
 	"\tpage_size\x18\x04 \x01(\x05R\bpageSize\"2\n" +
 	"\x17GetPlayersByTeamRequest\x12\x17\n" +
-	"\ateam_id\x18\x01 \x01(\x05R\x06teamId*G\n" +
+	"\ateam_id\x18\x01 \x01(\x05R\x06teamId\" \n" +
+	"\x0eGetTeamRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\"\xa5\x01\n" +
+	"\fTeamResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x12\n" +
+	"\x04city\x18\x03 \x01(\tR\x04city\x12\"\n" +
+	"\fabbreviation\x18\x04 \x01(\tR\fabbreviation\x12\x1e\n" +
+	"\n" +
+	"conference\x18\x05 \x01(\tR\n" +
+	"conference\x12\x19\n" +
+	"\blogo_url\x18\x06 \x01(\tR\alogoUrl\"\x12\n" +
+	"\x10ListTeamsRequest\";\n" +
+	"\x11ListTeamsResponse\x12&\n" +
+	"\x05teams\x18\x01 \x03(\v2\x10.v1.TeamResponseR\x05teams\"(\n" +
+	"\x12ListMatchesRequest\x12\x12\n" +
+	"\x04date\x18\x01 \x01(\tR\x04date\"\xdc\x02\n" +
+	"\rMatchResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
+	"\x04date\x18\x02 \x01(\tR\x04date\x12 \n" +
+	"\fhome_team_id\x18\x03 \x01(\x05R\n" +
+	"homeTeamId\x12&\n" +
+	"\x0fvisitor_team_id\x18\x04 \x01(\x05R\rvisitorTeamId\x12\x1d\n" +
+	"\n" +
+	"home_score\x18\x05 \x01(\x05R\thomeScore\x12#\n" +
+	"\rvisitor_score\x18\x06 \x01(\x05R\fvisitorScore\x12\x16\n" +
+	"\x06status\x18\a \x01(\x05R\x06status\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\b \x01(\tR\tstartTime\x12-\n" +
+	"\thome_team\x18\t \x01(\v2\x10.v1.TeamResponseR\bhomeTeam\x123\n" +
+	"\fvisitor_team\x18\n" +
+	" \x01(\v2\x10.v1.TeamResponseR\vvisitorTeam\"B\n" +
+	"\x13ListMatchesResponse\x12+\n" +
+	"\amatches\x18\x01 \x03(\v2\x11.v1.MatchResponseR\amatches\"!\n" +
+	"\x0fGetMatchRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"\x8f\x02\n" +
+	"\x17RecordMatchEventRequest\x12\x19\n" +
+	"\bmatch_id\x18\x01 \x01(\x03R\amatchId\x12\x1b\n" +
+	"\tplayer_id\x18\x02 \x01(\x05R\bplayerId\x12\x12\n" +
+	"\x04type\x18\x03 \x01(\x05R\x04type\x12\x14\n" +
+	"\x05value\x18\x04 \x01(\x05R\x05value\x12\x1d\n" +
+	"\n" +
+	"event_time\x18\x05 \x01(\tR\teventTime\x12\x17\n" +
+	"\ateam_id\x18\x06 \x01(\x05R\x06teamId\x12\x18\n" +
+	"\aquarter\x18\a \x01(\x05R\aquarter\x12\x19\n" +
+	"\bsub_type\x18\b \x01(\tR\asubType\x12%\n" +
+	"\x0etime_remaining\x18\t \x01(\tR\rtimeRemaining\"N\n" +
+	"\x18RecordMatchEventResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage*G\n" +
 	"\bPosition\x12\x14\n" +
 	"\x10POSITION_UNKNOWN\x10\x00\x12\x06\n" +
 	"\x02PG\x10\x01\x12\x06\n" +
@@ -896,7 +1565,7 @@ const file_api_proto_v1_nba_service_proto_rawDesc = "" +
 	"\n" +
 	"\x06ACTIVE\x10\x02\x12\v\n" +
 	"\aINJURED\x10\x03\x12\f\n" +
-	"\bASSIGNED\x10\x042\x8a\x03\n" +
+	"\bASSIGNED\x10\x042\xb8\x05\n" +
 	"\n" +
 	"NBAService\x12;\n" +
 	"\fCreatePlayer\x12\x17.v1.CreatePlayerRequest\x1a\x12.v1.PlayerResponse\x125\n" +
@@ -904,7 +1573,12 @@ const file_api_proto_v1_nba_service_proto_rawDesc = "" +
 	"\fUpdatePlayer\x12\x17.v1.UpdatePlayerRequest\x1a\x12.v1.PlayerResponse\x12A\n" +
 	"\fDeletePlayer\x12\x17.v1.DeletePlayerRequest\x1a\x18.v1.DeletePlayerResponse\x12>\n" +
 	"\vListPlayers\x12\x16.v1.ListPlayersRequest\x1a\x17.v1.ListPlayersResponse\x12H\n" +
-	"\x10GetPlayersByTeam\x12\x1b.v1.GetPlayersByTeamRequest\x1a\x17.v1.ListPlayersResponseB Z\x1enba_service/api/proto/v1;nba_vb\x06proto3"
+	"\x10GetPlayersByTeam\x12\x1b.v1.GetPlayersByTeamRequest\x1a\x17.v1.ListPlayersResponse\x12/\n" +
+	"\aGetTeam\x12\x12.v1.GetTeamRequest\x1a\x10.v1.TeamResponse\x128\n" +
+	"\tListTeams\x12\x14.v1.ListTeamsRequest\x1a\x15.v1.ListTeamsResponse\x12>\n" +
+	"\vListMatches\x12\x16.v1.ListMatchesRequest\x1a\x17.v1.ListMatchesResponse\x122\n" +
+	"\bGetMatch\x12\x13.v1.GetMatchRequest\x1a\x11.v1.MatchResponse\x12M\n" +
+	"\x10RecordMatchEvent\x12\x1b.v1.RecordMatchEventRequest\x1a\x1c.v1.RecordMatchEventResponseB Z\x1enba_service/api/proto/v1;nba_vb\x06proto3"
 
 var (
 	file_api_proto_v1_nba_service_proto_rawDescOnce sync.Once
@@ -919,19 +1593,29 @@ func file_api_proto_v1_nba_service_proto_rawDescGZIP() []byte {
 }
 
 var file_api_proto_v1_nba_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_api_proto_v1_nba_service_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_api_proto_v1_nba_service_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_api_proto_v1_nba_service_proto_goTypes = []any{
-	(Position)(0),                   // 0: v1.Position
-	(PlayerStatus)(0),               // 1: v1.PlayerStatus
-	(*CreatePlayerRequest)(nil),     // 2: v1.CreatePlayerRequest
-	(*GetPlayerRequest)(nil),        // 3: v1.GetPlayerRequest
-	(*UpdatePlayerRequest)(nil),     // 4: v1.UpdatePlayerRequest
-	(*DeletePlayerRequest)(nil),     // 5: v1.DeletePlayerRequest
-	(*DeletePlayerResponse)(nil),    // 6: v1.DeletePlayerResponse
-	(*PlayerResponse)(nil),          // 7: v1.PlayerResponse
-	(*ListPlayersRequest)(nil),      // 8: v1.ListPlayersRequest
-	(*ListPlayersResponse)(nil),     // 9: v1.ListPlayersResponse
-	(*GetPlayersByTeamRequest)(nil), // 10: v1.GetPlayersByTeamRequest
+	(Position)(0),                    // 0: v1.Position
+	(PlayerStatus)(0),                // 1: v1.PlayerStatus
+	(*CreatePlayerRequest)(nil),      // 2: v1.CreatePlayerRequest
+	(*GetPlayerRequest)(nil),         // 3: v1.GetPlayerRequest
+	(*UpdatePlayerRequest)(nil),      // 4: v1.UpdatePlayerRequest
+	(*DeletePlayerRequest)(nil),      // 5: v1.DeletePlayerRequest
+	(*DeletePlayerResponse)(nil),     // 6: v1.DeletePlayerResponse
+	(*PlayerResponse)(nil),           // 7: v1.PlayerResponse
+	(*ListPlayersRequest)(nil),       // 8: v1.ListPlayersRequest
+	(*ListPlayersResponse)(nil),      // 9: v1.ListPlayersResponse
+	(*GetPlayersByTeamRequest)(nil),  // 10: v1.GetPlayersByTeamRequest
+	(*GetTeamRequest)(nil),           // 11: v1.GetTeamRequest
+	(*TeamResponse)(nil),             // 12: v1.TeamResponse
+	(*ListTeamsRequest)(nil),         // 13: v1.ListTeamsRequest
+	(*ListTeamsResponse)(nil),        // 14: v1.ListTeamsResponse
+	(*ListMatchesRequest)(nil),       // 15: v1.ListMatchesRequest
+	(*MatchResponse)(nil),            // 16: v1.MatchResponse
+	(*ListMatchesResponse)(nil),      // 17: v1.ListMatchesResponse
+	(*GetMatchRequest)(nil),          // 18: v1.GetMatchRequest
+	(*RecordMatchEventRequest)(nil),  // 19: v1.RecordMatchEventRequest
+	(*RecordMatchEventResponse)(nil), // 20: v1.RecordMatchEventResponse
 }
 var file_api_proto_v1_nba_service_proto_depIdxs = []int32{
 	0,  // 0: v1.CreatePlayerRequest.position:type_name -> v1.Position
@@ -943,23 +1627,37 @@ var file_api_proto_v1_nba_service_proto_depIdxs = []int32{
 	0,  // 6: v1.ListPlayersRequest.position:type_name -> v1.Position
 	1,  // 7: v1.ListPlayersRequest.status:type_name -> v1.PlayerStatus
 	7,  // 8: v1.ListPlayersResponse.players:type_name -> v1.PlayerResponse
-	2,  // 9: v1.NBAService.CreatePlayer:input_type -> v1.CreatePlayerRequest
-	3,  // 10: v1.NBAService.GetPlayer:input_type -> v1.GetPlayerRequest
-	4,  // 11: v1.NBAService.UpdatePlayer:input_type -> v1.UpdatePlayerRequest
-	5,  // 12: v1.NBAService.DeletePlayer:input_type -> v1.DeletePlayerRequest
-	8,  // 13: v1.NBAService.ListPlayers:input_type -> v1.ListPlayersRequest
-	10, // 14: v1.NBAService.GetPlayersByTeam:input_type -> v1.GetPlayersByTeamRequest
-	7,  // 15: v1.NBAService.CreatePlayer:output_type -> v1.PlayerResponse
-	7,  // 16: v1.NBAService.GetPlayer:output_type -> v1.PlayerResponse
-	7,  // 17: v1.NBAService.UpdatePlayer:output_type -> v1.PlayerResponse
-	6,  // 18: v1.NBAService.DeletePlayer:output_type -> v1.DeletePlayerResponse
-	9,  // 19: v1.NBAService.ListPlayers:output_type -> v1.ListPlayersResponse
-	9,  // 20: v1.NBAService.GetPlayersByTeam:output_type -> v1.ListPlayersResponse
-	15, // [15:21] is the sub-list for method output_type
-	9,  // [9:15] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	12, // 9: v1.ListTeamsResponse.teams:type_name -> v1.TeamResponse
+	12, // 10: v1.MatchResponse.home_team:type_name -> v1.TeamResponse
+	12, // 11: v1.MatchResponse.visitor_team:type_name -> v1.TeamResponse
+	16, // 12: v1.ListMatchesResponse.matches:type_name -> v1.MatchResponse
+	2,  // 13: v1.NBAService.CreatePlayer:input_type -> v1.CreatePlayerRequest
+	3,  // 14: v1.NBAService.GetPlayer:input_type -> v1.GetPlayerRequest
+	4,  // 15: v1.NBAService.UpdatePlayer:input_type -> v1.UpdatePlayerRequest
+	5,  // 16: v1.NBAService.DeletePlayer:input_type -> v1.DeletePlayerRequest
+	8,  // 17: v1.NBAService.ListPlayers:input_type -> v1.ListPlayersRequest
+	10, // 18: v1.NBAService.GetPlayersByTeam:input_type -> v1.GetPlayersByTeamRequest
+	11, // 19: v1.NBAService.GetTeam:input_type -> v1.GetTeamRequest
+	13, // 20: v1.NBAService.ListTeams:input_type -> v1.ListTeamsRequest
+	15, // 21: v1.NBAService.ListMatches:input_type -> v1.ListMatchesRequest
+	18, // 22: v1.NBAService.GetMatch:input_type -> v1.GetMatchRequest
+	19, // 23: v1.NBAService.RecordMatchEvent:input_type -> v1.RecordMatchEventRequest
+	7,  // 24: v1.NBAService.CreatePlayer:output_type -> v1.PlayerResponse
+	7,  // 25: v1.NBAService.GetPlayer:output_type -> v1.PlayerResponse
+	7,  // 26: v1.NBAService.UpdatePlayer:output_type -> v1.PlayerResponse
+	6,  // 27: v1.NBAService.DeletePlayer:output_type -> v1.DeletePlayerResponse
+	9,  // 28: v1.NBAService.ListPlayers:output_type -> v1.ListPlayersResponse
+	9,  // 29: v1.NBAService.GetPlayersByTeam:output_type -> v1.ListPlayersResponse
+	12, // 30: v1.NBAService.GetTeam:output_type -> v1.TeamResponse
+	14, // 31: v1.NBAService.ListTeams:output_type -> v1.ListTeamsResponse
+	17, // 32: v1.NBAService.ListMatches:output_type -> v1.ListMatchesResponse
+	16, // 33: v1.NBAService.GetMatch:output_type -> v1.MatchResponse
+	20, // 34: v1.NBAService.RecordMatchEvent:output_type -> v1.RecordMatchEventResponse
+	24, // [24:35] is the sub-list for method output_type
+	13, // [13:24] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_api_proto_v1_nba_service_proto_init() }
@@ -973,7 +1671,7 @@ func file_api_proto_v1_nba_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_proto_v1_nba_service_proto_rawDesc), len(file_api_proto_v1_nba_service_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   9,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

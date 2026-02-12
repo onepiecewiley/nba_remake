@@ -3,7 +3,7 @@ server:
   port: ":50051"
 
 mysql:
-  dsn: "root:123456@tcp(127.0.0.1:3306)/nba_manager?charset=utf8mb4&parseTime=True&loc=Local"
+  dsn: "root:123456@tcp(192.168.127.154:3306)/nba_manager?charset=utf8mb4&parseTime=True&loc=Local"
   max_idle: 10
   max_open: 100
 
@@ -12,3 +12,37 @@ kafka:
     - "192.168.127.154:9092"
   topic: "nba_match_events_fix"
   group_id: "nba_group"
+
+
+redis:
+  addr: "192.168.127.154:6379"        # Redis地址（默认端口6379）
+  password: ""                        # Redis密码（测试环境默认空，生产需设置）
+  db: 0                               # 使用的数据库编号（默认0，可根据业务分库）
+  max_idle: 20                        # 最大空闲连接数
+  max_active: 100                     # 最大活跃连接数
+  idle_timeout: 300s                  # 空闲连接超时时间
+  read_timeout: 3s                    # 读超时
+  write_timeout: 3s                   # 写超时
+  connect_timeout: 5s                 # 连接超时
+
+
+elasticsearch:
+  addresses:                          # ES地址列表（支持集群，单节点直接填一个）
+    - "http://192.168.127.154:9200"
+  username: ""                        # ES用户名（默认空，7.x+默认无密码）
+  password: ""                        # ES密码（测试环境默认空）
+  timeout: 10s                        # 连接/读写超时时间
+  max_retries: 3                      # 请求失败最大重试次数
+  index_prefix: "nba_"                # 索引前缀（方便区分环境，如nba_match_events）
+  sniff: false                        # 是否自动发现集群节点（测试环境关闭）
+
+
+mongodb:
+  uri: "mongodb://192.168.127.154:27017/nba_manager?maxPoolSize=20&minPoolSize=5"  # 连接字符串
+  database: "nba_manager"             # 显式指定数据库名（和URI中一致，方便读取）
+  connect_timeout: 10s                # 连接超时
+  socket_timeout: 30s                 # 套接字超时
+  max_pool_size: 20                   # 最大连接池大小
+  min_pool_size: 5                    # 最小连接池大小
+  max_idle_time: 60s                  # 连接最大空闲时间
+

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	myErrors "nba-remake/errors"
 	"net/http"
 	"strconv"
 	"time"
@@ -122,7 +123,7 @@ func main() {
 
 		resp, err := client.GetTeam(context.Background(), &pb.GetTeamRequest{Id: int32(id)})
 		if err != nil {
-			c.JSON(http.StatusNotFound, gin.H{"error": "球队未找到"})
+			c.JSON(http.StatusNotFound, gin.H{"error": myErrors.NewError(myErrors.CodeTeamNotFound, "球队未找到", "")})
 			return
 		}
 		c.JSON(http.StatusOK, resp)

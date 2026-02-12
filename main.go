@@ -3,6 +3,9 @@ package main
 import (
 	"context"
 	"log"
+	"nba-remake/internal/cache"
+	"nba-remake/internal/es"
+	"nba-remake/internal/mongodb"
 	"net"
 	"os"
 	"os/signal"
@@ -43,7 +46,14 @@ func main() {
 	playerDAO := dao.NewPlayerDao(db)
 	teamDAO := dao.NewTeamDao(db)
 	matchDAO := dao.NewMatchDao(db)
-	nbaService := service.NewNBAService(playerDAO, teamDAO, matchDAO, kafkaProducer)
+
+	// 初始化Redis Client
+	cacheClient := cache.NewCache(&conf.Redis)
+
+	// 初始化mongodb Client
+	mongoClient := mongodb.NewMongoDBClient(&conf.MongoDB)
+	esClient := es.NewEsClient(&conf.Elasticsearch)
+	nbaService := service.NewNBAService(playerDAO, teamDAO, matchDAO, kafkaProducer, cacheClient, mongoClient, esClient)
 
 	// 初始化 gRPC Server
 	server := grpc.NewServer()

@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"google.golang.org/grpc/codes"
@@ -28,6 +29,21 @@ func (s *NBAService) ListMatches(ctx context.Context, req *pb.ListMatchesRequest
 
 // GetMatch 查详情
 func (s *NBAService) GetMatch(ctx context.Context, req *pb.GetMatchRequest) (*pb.MatchResponse, error) {
+	cacheKey := fmt.Sprintf("match:%d", req.Id)
+
+	// 1. 先查 Redis
+	val, err := s.redisClient.Get(ctx, cacheKey).Result()
+	if err == nil {
+		// 缓存命中，直接反序列化返回
+		var resp pb.MatchResponse
+		err := json.Unmarshal([]byte(val), &resp)
+		if err != nil {
+			return nil, errors.New("缓存数据反序列化失败: " + err.Error())
+		}
+		return &resp, nil
+	}
+
+	// 2. 缓存未命中，查 MySQL
 	match, err := s.matchDao.GetByID(req.Id)
 	if err != nil {
 		return nil, status.Error(codes.NotFound, "比赛未找到")

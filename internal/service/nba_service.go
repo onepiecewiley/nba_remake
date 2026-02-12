@@ -2,6 +2,9 @@ package service
 
 import (
 	"context"
+	"github.com/elastic/go-elasticsearch/v8"
+	"github.com/redis/go-redis/v9"
+	"go.mongodb.org/mongo-driver/mongo"
 	pb "nba-remake/api/proto/v1"
 	"nba-remake/internal/dao"
 	"nba-remake/internal/model"
@@ -15,14 +18,20 @@ type NBAService struct {
 	teamDao       *dao.TeamDao
 	matchDao      *dao.MatchDao
 	kafkaProducer *mq.Producer
+	redisClient   *redis.Client
+	mongodbClient *mongo.Client
+	esClient      *elasticsearch.Client
 }
 
-func NewNBAService(playerDao *dao.PlayerDao, teamDao *dao.TeamDao, matchDao *dao.MatchDao, kafkaProducer *mq.Producer) *NBAService {
+func NewNBAService(playerDao *dao.PlayerDao, teamDao *dao.TeamDao, matchDao *dao.MatchDao, kafkaProducer *mq.Producer, redisClient *redis.Client, mongodbClient *mongo.Client, esClient *elasticsearch.Client) *NBAService {
 	return &NBAService{
 		playerDao:     playerDao,
 		teamDao:       teamDao,
 		matchDao:      matchDao,
 		kafkaProducer: kafkaProducer,
+		redisClient:   redisClient,
+		mongodbClient: mongodbClient,
+		esClient:      esClient,
 	}
 }
 
